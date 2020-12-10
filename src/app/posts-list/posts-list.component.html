@@ -1,0 +1,53 @@
+<div class="grid-container">
+  <div *ngIf="selectedPost">
+    <form [formGroup]="formModel" (ngSubmit)='update()' class="form-horizontal">
+      <div class="form-group">
+        <label for="id" class="col-sm-2 control-label">Id</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="id" [formControl]="id" readonly>
+        </div>
+      </div>
+      <div class="form-group" [ngClass]="title.invalid ? 'has-error':''">
+        <label for="title" class="col-sm-2 control-label">Title</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="title" placeholder="Title" [formControl]="title">
+          <span class="help-block" *ngIf="title.errors && title.errors.required">
+          TITLE FIELD IS REQUIRED!
+        </span>
+        </div>
+      </div>
+
+      <div class="form-group" [ngClass]="body.invalid ? 'has-error':''">
+        <label for="body" class="col-sm-2 control-label">Body</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="body" placeholder="Body" [formControl]="body">
+          <span class="help-block" *ngIf="body.errors && body.errors.required">
+          BODY FIELD IS REQUIRED!
+        </span>
+          <span class="help-block" *ngIf="body.errors &&  body.errors.maxlength">
+          MAX BODY LENGTH IS 20!
+          </span>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-default" [disabled]="!formModel.valid">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="posts">
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-info post-container"
+          *ngFor="let post of posts"
+          (click)="select(post)">
+        <div class="panel panel-default">
+          <div class="panel-heading">{{post.title}}</div>
+          <div class="panel-body">
+            {{post.body}}
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
